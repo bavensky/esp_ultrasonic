@@ -1,6 +1,5 @@
 #include <MqttConnector.h>
 
-
 // MQTT INITIALIZER
 void init_mqtt()
 {
@@ -26,11 +25,11 @@ void init_mqtt()
   {
       macAddr += String(mac[i], 16);
   }
-    //FORMAT
-    //d:quickstart:<type-id>:<device-id>
-    //config->clientId += macAddr;
+
+    // FORMAT
+    // d:quickstart:<type-id>:<device-id>
+    // config->clientId += macAddr;
     //config->topicPub  = String("/HelloChiangMaiMakerClub/gearname/") + config->clientId;
-    
   });
 
   mqtt->on_after_prepare_configuration([&](MqttConnector::Config config) -> void {
@@ -39,13 +38,9 @@ void init_mqtt()
     Serial.printf("[USER] PUB  = %s\r\n", config.topicPub.c_str());
     Serial.printf("[USER] SUB  = %s\r\n", config.topicSub.c_str());
   });
-
+  
   mqtt->on_prepare_data(on_prepare_data, PUBLISH_EVERY);
-
-  mqtt->on_prepare_subscribe([&](MQTT::Subscribe * sub) -> void {
-    Serial.println("[CUSTOM] SUBSCRIPTION...");
-  });
-
+  mqtt->on_prepare_subscribe([&](MQTT::Subscribe * sub) -> void { });
   mqtt->on_after_prepare_data([&](JsonObject * root) -> void {
     /**************
     remove prepared data from lib
@@ -65,8 +60,8 @@ void init_mqtt()
   });
 
   mqtt->on_published([&](const MQTT::Publish & pub) -> void {
-    // Serial.print("PUBLISHED: ");
-    // Serial.println(pub.payload_string());
+//    Serial.print("[MQTT] PUBLISHED: ");
+//    Serial.println(pub.payload_string());
   });
 
   mqtt->connect();
