@@ -6,8 +6,9 @@ MqttConnector::prepare_data_hook_t on_prepare_data =
   float h_dht = 0;
   int detect;
   R_ultrasonic();
-  if(cm < 60)  {
+  if(cm < 30)  {
     detect = 1;
+    delay(5000);
   }
   else {
     detect = 0;
